@@ -166,7 +166,7 @@ class ListTests: XCTestCase {
 
     func testFlatMapOptional() {
         let list = List<Int>(0..<100)
-        let r = list.flatMap { n -> Int? in
+        let r = list.compactMap { n -> Int? in
             return n & 1 == 0 ? n / 2 : nil
         }
         assertEqualElements(r, 0..<50)
@@ -213,24 +213,24 @@ class ListTests: XCTestCase {
         XCTAssertFalse(list1.elementsEqual(list3))
     }
 
-    func testIndexOfPredicate() {
+    func testFirstIndexOfPredicate() {
         let list = List<Int>(0..<50)
         for v in 0 ..< 50 {
-            let i = list.index { $0 == v }
+            let i = list.firstIndex { $0 == v }
             XCTAssertEqual(i, v)
         }
-        XCTAssertNil(list.index { $0 == -1 })
-        XCTAssertNil(list.index { $0 == 50 })
+        XCTAssertNil(list.firstIndex { $0 == -1 })
+        XCTAssertNil(list.firstIndex { $0 == 50 })
     }
 
-    func testIndexOfValue() {
+    func testFirstIndexOfValue() {
         let list = List<Int>(0..<50)
         for v in 0 ..< 50 {
-            let i = list.index(of: v)
+            let i = list.firstIndex(of: v)
             XCTAssertEqual(i, v)
         }
-        XCTAssertNil(list.index(of: -1))
-        XCTAssertNil(list.index(of: 50))
+        XCTAssertNil(list.firstIndex(of: -1))
+        XCTAssertNil(list.firstIndex(of: 50))
     }
 
     func testContains() {

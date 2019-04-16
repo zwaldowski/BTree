@@ -246,7 +246,7 @@ extension List {
     /// Return an `Array` containing the non-`nil` results of mapping `transform` over `self`.
     ///
     /// - Complexity: O(`count`)
-    public func flatMap<T>(_ transform: (Element) throws -> T?) rethrows -> [T] {
+    public func compactMap<T>(_ transform: (Element) throws -> T?) rethrows -> [T] {
         var result: [T] = []
         try self.forEach { element in
             if let t = try transform(element) {
@@ -285,7 +285,7 @@ extension List {
     }
 }
 
-public extension List {
+extension List {
     //MARK: Queries
 
     /// Return `true` iff `self` and `other` contain equivalent elements, using `isEquivalent` as the equivalence test.
@@ -305,7 +305,7 @@ public extension List {
     /// such value is not found.
     ///
     /// - Complexity: O(`count`)
-    public func index(where predicate: (Element) throws -> Bool) rethrows -> Index? {
+    public func firstIndex(where predicate: (Element) throws -> Bool) rethrows -> Index? {
         var i = 0
         try self.tree.forEach { element -> Bool in
             if try predicate(element.1) {
@@ -318,7 +318,7 @@ public extension List {
     }
 }
 
-public extension List where Element: Equatable {
+extension List: Equatable where Element: Equatable {
 
     /// Return `true` iff `self` and `other` contain equal elements.
     ///
@@ -336,7 +336,7 @@ public extension List where Element: Equatable {
     /// Returns the first index where the given element appears in `self` or `nil` if the element is not found.
     ///
     /// - Complexity: O(`count`)
-    public func index(of element: Element) -> Index? {
+    public func firstIndex(of element: Element) -> Int? {
         var i = 0
         self.tree.forEach { e -> Bool in
             if element == e.1 {
@@ -350,7 +350,7 @@ public extension List where Element: Equatable {
 
     /// Return true iff `element` is in `self`.
     public func contains(_ element: Element) -> Bool {
-        return index(of: element) != nil
+        return firstIndex(of: element) != nil
     }
 
     /// Returns true iff the two lists have the same elements in the same order.
@@ -361,11 +361,6 @@ public extension List where Element: Equatable {
     /// - Complexity: O(`count`)
     public static func ==(a: List, b: List) -> Bool {
         return a.elementsEqual(b)
-    }
-
-    /// Returns false iff the two lists do not have the same elements in the same order.
-    public static func !=(a: List, b: List) -> Bool {
-        return !(a == b)
     }
 }
 

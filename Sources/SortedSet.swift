@@ -250,8 +250,8 @@ extension SortedSet {
     }
 
     /// Return an `Array` containing the non-`nil` results of mapping `transform` over `self`.
-    public func flatMap<T>(_ transform: (Element) throws -> T?) rethrows -> [T] {
-        return try tree.flatMap { try transform($0.0) }
+    public func compactMap<T>(_ transform: (Element) throws -> T?) rethrows -> [T] {
+        return try tree.compactMap { try transform($0.0) }
     }
 
     /// Return an `Array` containing the elements of `self`, in ascending order, that satisfy the predicate `includeElement`.
@@ -420,7 +420,7 @@ extension SortedSet {
     /// Returns the index of a given member, or `nil` if the member is not present in the set.
     ///
     /// - Complexity: O(log(`count`))
-    public func index(of member: Element) -> BTreeIndex<Element, Void>? {
+    public func firstIndex(of member: Element) -> BTreeIndex<Element, Void>? {
         return tree.index(forKey: member)
     }
 

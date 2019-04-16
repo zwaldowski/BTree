@@ -361,8 +361,8 @@ struct DictionaryBag<Element: Hashable>: Collection {
 
 struct Ref<Target: AnyObject>: Hashable {
     let target: Target
-    var hashValue: Int {
-        return ObjectIdentifier(target).hashValue
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(ObjectIdentifier(target))
     }
     static func ==(left: Ref, right: Ref) -> Bool {
         return left.target === right.target

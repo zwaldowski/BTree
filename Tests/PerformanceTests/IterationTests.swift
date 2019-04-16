@@ -77,7 +77,7 @@ class IterationTests: XCTestCase {
     }
 
     func testCursorOnUniqueTree() {
-        measureMetrics(IterationTests.defaultPerformanceMetrics(), automaticallyStartMeasuring: false) {
+        measureMetrics(IterationTests.defaultPerformanceMetrics, automaticallyStartMeasuring: false) {
             var test = BTree<Int, String>(sortedElements: (0 ..< count).lazy.map { ($0, "\($0)") })
             self.startMeasuring()
             test.withCursorAtStart { cursor in

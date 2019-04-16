@@ -204,17 +204,17 @@ class SortedSetTests: XCTestCase {
         assertEqualElements(r, 0 ..< c)
     }
 
-    func test_flatMap_Sequence() {
+    func test_flatMap() {
         let c = 1000
         let set = SortedSet(0 ..< c)
         let r = set.flatMap { [$0, $0, $0] }
         assertEqualElements(r, (0 ..< c).repeatEach(3))
     }
 
-    func test_flatMap_Optional() {
+    func test_compactMap() {
         let c = 1000
         let set = SortedSet(0 ..< c)
-        let r = set.flatMap { $0 & 1 == 0 ? $0 / 2 : nil }
+        let r = set.compactMap { $0 & 1 == 0 ? $0 / 2 : nil }
         assertEqualElements(r, 0 ..< 500)
     }
 
@@ -305,11 +305,11 @@ class SortedSetTests: XCTestCase {
         }
     }
 
-    func test_indexOf() {
+    func test_firstIndexOf() {
         let c = 100
         let set = SortedSet((0 ..< c).map { 2 * $0 })
         for i in 0 ..< 2 * c {
-            let index = set.index(of: i)
+            let index = set.firstIndex(of: i)
             if i & 1 == 0 {
                 XCTAssertEqual(index, set.index(set.startIndex, offsetBy: i / 2))
                 XCTAssertEqual(set[index!], i)

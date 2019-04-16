@@ -482,7 +482,7 @@ extension Map {
     }
 }
 
-extension Map where Value: Equatable {
+extension Map: Equatable where Value: Equatable {
     /// Return `true` iff `self` and `other` contain equivalent elements.
     ///
     /// This method skips over shared subtrees when possible; this can drastically improve performance when the
@@ -499,11 +499,6 @@ extension Map where Value: Equatable {
     /// two maps are divergent mutations originating from the same value.
     public static func ==(a: Map, b: Map) -> Bool {
         return a.elementsEqual(b)
-    }
-
-    /// Return true iff `a` is not equal to `b`.
-    public static func !=(a: Map, b: Map) -> Bool {
-        return !(a == b)
     }
 }
 

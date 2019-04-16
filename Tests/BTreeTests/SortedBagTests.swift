@@ -222,17 +222,17 @@ class SortedBagTests: XCTestCase {
         assertEqualElements(r, 0 ..< c)
     }
 
-    func test_flatMap_Sequence() {
+    func test_flatMap() {
         let c = 1000
         let bag = SortedBag(0 ..< c)
         let r = bag.flatMap { [$0, $0, $0] }
         assertEqualElements(r, (0 ..< c).repeatEach(3))
     }
 
-    func test_flatMap_Optional() {
+    func test_compactMap() {
         let c = 1000
         let bag = SortedBag(0 ..< c)
-        let r = bag.flatMap { $0 & 1 == 0 ? $0 / 2 : nil }
+        let r = bag.compactMap { $0 & 1 == 0 ? $0 / 2 : nil }
         assertEqualElements(r, 0 ..< 500)
     }
 
@@ -352,7 +352,7 @@ class SortedBagTests: XCTestCase {
         let c = 100
         let bag = SortedBag((0 ..< c).map { 2 * $0 }.repeatEach(3))
         for i in 0 ..< 2 * c {
-            let index = bag.index(of: i)
+            let index = bag.firstIndex(of: i)
             if i & 1 == 0 {
                 XCTAssertEqual(index, bag.index(bag.startIndex, offsetBy: i / 2 * 3))
                 XCTAssertEqual(bag[index!], i)
